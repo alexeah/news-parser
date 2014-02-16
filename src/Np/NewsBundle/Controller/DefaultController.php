@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('NpNewsBundle:Default:index.html.twig', array('name' => 1));
     }
+
+    public function pullAction()
+    {
+        $this->getDoctrine()->getRepository('NpNewsBundle:Feed')->pull();
+    }
 }
