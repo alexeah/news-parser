@@ -1,0 +1,18 @@
+html {
+    background: #dadada;
+}
+body {
+    width: 1000px;
+    margin: 0 auto;
+    font-size: 13px;
+    background: #ffffff;
+}
+div#controls {
+    background: #494949;
+    padding: 10px;
+}
+div#controls > a {
+    display: inline-block;
+    padding: 10px;
+    color: #ffffff;
+}

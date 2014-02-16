@@ -1,14 +1,28 @@
-{% if is_user_admin %}
-    <div class='action-pull'><a href="{{ path('np_news_pull') }}">Pull all feeds</a></div>
-    <div class='action-edit-feeds'><a href="{{ path('admin_feeds') }}">Edit feed list</a></div>
-    <div></div>
-{% endif %}
-<ul class='feed_items'>
-{% for item in feed_items %}
-    <li>
-        <div class='title'>{{ item.title }}</div>
-        <div class='url'>{{ item.url }}</div>
-        <div class='description'>{{ item.description|raw }}</div>
-    </li>
-{% endfor %}
-</ul>
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href='{{ asset('bundles/npnews/css/home.css' ) }}' type='text/css' rel='stylesheet' />
+{% endblock %}
+{% block body %}
+    <div id='controls'>
+    {% if is_user_admin %}
+        <a href='{{ path('np_news_pull') }}' class='action-pull'>Pull all feeds</a>
+        <a href='{{ path('admin_feeds') }}' class='action-edit-feeds'>Edit feed list</a>
+    {% else %}
+        <a href='{{ path('np_news_pull') }}'>Admin</a>
+    {% endif %}
+    </div>
+    {% if message %}
+        <div id='message'>{{ message }}</div>
+    {% endif %}
+    <ul id='feed_items'>
+    {% for item in feed_items %}
+        <li>
+            <div class='title'>{{ item.title }}</div>
+            <div class='url'>{{ item.url }}</div>
+            <div class='publish_time'>{{ item.publish_time }}</div>
+            <div class='description'>{{ item.description|raw }}</div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

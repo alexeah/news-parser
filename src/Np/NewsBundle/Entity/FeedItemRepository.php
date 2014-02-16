@@ -20,12 +20,14 @@ class FeedItemRepository extends EntityRepository
 
     public function mergeItemCandidates(array $itemCandidates)
     {
+        $amountAdded = 0;
         foreach ($itemCandidates as $itemCandidate) {
             if ($this->isItemUniq($itemCandidate)) {
+                $amountAdded ++;
                 $this->getEntityManager()->persist($itemCandidate);
             }
         }
         $this->getEntityManager()->flush();
-        var_dump(4); die;
+        return $amountAdded;
     }
 }

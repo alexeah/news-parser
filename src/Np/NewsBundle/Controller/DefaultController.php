@@ -20,6 +20,7 @@ class DefaultController extends Controller
         return $this->render('NpNewsBundle:Default:index.html.twig', array(
             'feed_items' => self::mapFeedItems($feedItems),
             'is_user_admin' => $isUserAdmin,
+            'message' => null,
         ));
     }
 
@@ -30,11 +31,13 @@ class DefaultController extends Controller
      */
     public function pullAction()
     {
-        $this->getDoctrine()->getRepository('NpNewsBundle:Feed')->pull();
+        $amountAdded = $this->getDoctrine()->getRepository('NpNewsBundle:Feed')->pull();
         $feedItems = $this->getDoctrine()->getRepository('NpNewsBundle:FeedItem')->findBy(array(), array('publishTime' => 'desc'));
+        $message = sprintf('%d items were added', $amountAdded);
         return $this->render('NpNewsBundle:Default:index.html.twig', array(
             'feed_items' => self::mapFeedItems($feedItems),
             'is_user_admin' => true,
+            'message' => $message,
         ));
     }
 
@@ -49,7 +52,7 @@ class DefaultController extends Controller
         $formattedItems = array();
         foreach ($feedItems as $item) {
             $formattedItem = array();
-            $formattedItem['publish_time'] = $item->getPublishTime();
+            $formattedItem['publish_time'] = date('d M, Y H:i:s', $item->getPublishTime());
             $formattedItem['title'] = $item->getTitle();
             $formattedItem['description'] = $item->getDescription();
             $formattedItem['url'] = $item->getUrl();
