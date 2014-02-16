@@ -18,7 +18,9 @@ class FeedRepository extends EntityRepository
         $itemsCandidates = array();
         foreach ($feeds as $feed) {
             $itemsCandidates = array_merge($feed->getItemCandidates(), $itemsCandidates);
+            $feed->setLastPullTime($_SERVER['REQUEST_TIME']);
         }
+        $this->getEntityManager()->flush();
         return $itemsCandidates;
     }
 

@@ -7,12 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
+     * Time between pulls (seconds)
+     */
+    const PULL_INTERVAL = 100;
+
+    /**
      * Render all news
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
+        $this->quietPullIfNewsDeprecated();
         $isUserAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
         $feedItems = $this->getDoctrine()->getRepository('NpNewsBundle:FeedItem')->findBy(array(), array('publishTime' => 'desc'));
@@ -59,5 +65,20 @@ class DefaultController extends Controller
             $formattedItems[] = $formattedItem;
         }
         return $formattedItems;
+    }
+
+    /**
+     * Update feed items if it is time
+     */
+    private function quietPullIfNewsDeprecated()
+    {
+        $feed = $this->getDoctrine()->getRepository('NpNewsBundle:Feed')->findBy(array(), array('lastPullTime' => 'desc'), 1);
+        if (!count($feed)) {
+            return;
+        }
+        $feed = current($feed);
+        if ($_SERVER['REQUEST_TIME'] - $feed->getLastPullTime() > self::PULL_INTERVAL) {
+            $this->getDoctrine()->getRepository('NpNewsBundle:Feed')->pull();
+        }
     }
 }

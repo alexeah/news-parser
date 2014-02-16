@@ -28,6 +28,12 @@ class Feed
      */
     private $url;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="last_pull_time", type="integer")
+     */
+    private $lastPullTime;
 
     /**
      * Get id
@@ -60,6 +66,29 @@ class Feed
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * Get lastPullTime
+     *
+     * @return integer
+     */
+    public function getLastPullTime()
+    {
+        return $this->lastPullTime;
+    }
+
+    /**
+     * Set lastPullTime
+     *
+     * @param integer $lastPullTime
+     * @return Feed
+     */
+    public function setLastPullTime($lastPullTime)
+    {
+        $this->lastPullTime = $lastPullTime;
+
+        return $this;
     }
 
     public function getItemCandidates()
