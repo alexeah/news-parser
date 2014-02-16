@@ -1,1 +1,14 @@
-Hello {{ name }}!
+{% if is_user_admin %}
+    <div class='action-pull'><a href="{{ path('np_news_pull') }}">Pull all feeds</a></div>
+    <div class='action-edit-feeds'><a href="{{ path('admin_feeds') }}">Edit feed list</a></div>
+    <div></div>
+{% endif %}
+<ul class='feed_items'>
+{% for item in feed_items %}
+    <li>
+        <div class='title'>{{ item.title }}</div>
+        <div class='url'>{{ item.url }}</div>
+        <div class='description'>{{ item.description|raw }}</div>
+    </li>
+{% endfor %}
+</ul>

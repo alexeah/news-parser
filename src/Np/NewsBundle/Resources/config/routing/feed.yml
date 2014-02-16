@@ -1,0 +1,30 @@
+admin_feeds:
+    pattern:  /
+    defaults: { _controller: "NpNewsBundle:Feed:index" }
+
+admin_feeds_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "NpNewsBundle:Feed:show" }
+
+admin_feeds_new:
+    pattern:  /new
+    defaults: { _controller: "NpNewsBundle:Feed:new" }
+
+admin_feeds_create:
+    pattern:  /create
+    defaults: { _controller: "NpNewsBundle:Feed:create" }
+    requirements: { _method: post }
+
+admin_feeds_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "NpNewsBundle:Feed:edit" }
+
+admin_feeds_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "NpNewsBundle:Feed:update" }
+    requirements: { _method: post|put }
+
+admin_feeds_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "NpNewsBundle:Feed:delete" }
+    requirements: { _method: post|delete }

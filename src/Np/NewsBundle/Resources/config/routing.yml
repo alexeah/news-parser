@@ -4,3 +4,6 @@ np_news_homepage:
 np_news_pull:
     pattern:  /admin/pull
     defaults: { _controller: NpNewsBundle:Default:pull }
+NpNewsBundle_admin_feeds:
+    resource: "@NpNewsBundle/Resources/config/routing/feed.yml"
+    prefix:   /admin/feeds
