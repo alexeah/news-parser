@@ -1,0 +1,4 @@
+np_news:
+    resource: "@NpNewsBundle/Resources/config/routing.yml"
+    prefix:   /
+

@@ -1,0 +1,7 @@
+parameters:
+#    np_news.example.class: Np\NewsBundle\Example
+
+services:
+#    np_news.example:
+#        class: %np_news.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
