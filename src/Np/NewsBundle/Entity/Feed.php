@@ -31,7 +31,7 @@ class Feed
     /**
      * @var integer
      *
-     * @ORM\Column(name="last_pull_time", type="integer")
+     * @ORM\Column(name="last_pull_time", type="integer", nullable=true)
      */
     private $lastPullTime;
 
@@ -91,6 +91,11 @@ class Feed
         return $this;
     }
 
+    /**
+     * Pull remote feed
+     *
+     * @return array new items (entities)
+     */
     public function getItemCandidates()
     {
         $rssContent = self::getContentByUrl($this->url);
@@ -102,6 +107,12 @@ class Feed
         return $itemCandidates;
     }
 
+    /**
+     * Wrap curl
+     *
+     * @param $url
+     * @return mixed
+     */
     static private function getContentByUrl($url)
     {
         $curlHandler = curl_init($url);
@@ -111,7 +122,13 @@ class Feed
         return $content;
     }
 
-    private function getCandidateByRemoteItem($remoteItem)
+    /**
+     * Convert SimpleXMLElement to FeedItem Entity
+     *
+     * @param \SimpleXMLElement $remoteItem
+     * @return FeedItem
+     */
+    private function getCandidateByRemoteItem(\SimpleXMLElement $remoteItem)
     {
         $itemCandidate = new FeedItem();
         $itemCandidate->setUrl((string) $remoteItem->link)
@@ -122,6 +139,12 @@ class Feed
         return $itemCandidate;
     }
 
+    /**
+     * Convert RSS time to unix time
+     *
+     * @param $rssTime
+     * @return int
+     */
     static private function getUnixtimeByRssTime($rssTime)
     {
         return strtotime(trim(substr($rssTime, 0, strlen($rssTime) - 5)));

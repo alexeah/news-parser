@@ -12,17 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class FeedItemRepository extends EntityRepository
 {
-    private function isItemUniq(FeedItem $item)
+    /**
+     * Check if item is unique
+     *
+     * @param FeedItem $item
+     * @return bool
+     */
+    private function isItemUnique(FeedItem $item)
     {
         $suggestions = $this->findBy(array('url' => $item->getUrl()));
         return !count($suggestions);
     }
 
+    /**
+     * Save new items
+     *
+     * @param array $itemCandidates
+     * @return int
+     */
     public function mergeItemCandidates(array $itemCandidates)
     {
         $amountAdded = 0;
         foreach ($itemCandidates as $itemCandidate) {
-            if ($this->isItemUniq($itemCandidate)) {
+            if ($this->isItemUnique($itemCandidate)) {
                 $amountAdded ++;
                 $this->getEntityManager()->persist($itemCandidate);
             }

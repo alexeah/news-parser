@@ -4,14 +4,12 @@
     <link href='{{ asset('bundles/npnews/css/home.css' ) }}' type='text/css' rel='stylesheet' />
 {% endblock %}
 {% block body %}
-    <div id='controls'>
     {% if is_user_admin %}
+        <div id='controls'>
         <a href='{{ path('np_news_pull') }}' class='action-pull'>Pull all feeds</a>
         <a href='{{ path('admin_feeds') }}' class='action-edit-feeds'>Edit feed list</a>
-    {% else %}
-        <a href='{{ path('np_news_pull') }}'>Admin</a>
+        </div>
     {% endif %}
-    </div>
     {% if message %}
         <div id='message'>{{ message }}</div>
     {% endif %}

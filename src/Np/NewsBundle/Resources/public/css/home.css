@@ -16,6 +16,9 @@ ul#feed_items > li > div.title {
     font-weight: bold;
     padding: 5px 0;
 }
+ul#feed_items > li > div.description img {
+    max-width: 900px;
+}
 div#message {
     background: #ddddca;
     padding: 20px;

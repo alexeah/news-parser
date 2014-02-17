@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class FeedRepository extends EntityRepository
 {
+    /**
+     * Get all origin posts as entities
+     *
+     * @return array
+     */
     private function getItemCandidates()
     {
         $feeds = $this->findAll();
@@ -24,12 +29,18 @@ class FeedRepository extends EntityRepository
         return $itemsCandidates;
     }
 
+    /**
+     * Update feeds from origins
+     */
     public function pull()
     {
         $itemsCandidates = $this->getItemCandidates();
 
         if (count($itemsCandidates)) {
-            $this->getEntityManager()->getRepository('NpNewsBundle:FeedItem')->mergeItemCandidates($itemsCandidates);
+            $amountAdded = $this->getEntityManager()->getRepository('NpNewsBundle:FeedItem')->mergeItemCandidates($itemsCandidates);
+        } else {
+            $amountAdded = 0;
         }
+        return $amountAdded;
     }
 }
